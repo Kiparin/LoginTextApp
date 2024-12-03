@@ -31,19 +31,15 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        view.endEditing(true)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard loginTextField.text == user, passwordTextField.text == password else {
-            let alert = UIAlertController(
-                title: "Invalid login or password",
-                message: "Please try again",
-                preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
-                self.passwordTextField.text = ""
-            }
-            alert.addAction(okAction)
-            self.present(alert, animated: true)
+            viewAlertAction("Invalid login or password",
+                      "Please try again",
+                      { self.loginTextField.text = ""}
+            )
             return false
         }
         return true
@@ -65,19 +61,21 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction private func forgotUserNameAction() {
-        viewAlert("Forgot username", user)
+        viewAlertAction("Forgot username", user)
     }
     
     @IBAction private func forgotPasswordAction() {
-        viewAlert("Forgot password", password)
+        viewAlertAction("Forgot password", password)
     }
     
-    private func viewAlert(_ title: String, _ message: String) {
+    private func viewAlertAction(_ title: String, _ message: String,_ alertAction: (() -> Void)? = nil) {
         let alert = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default))
+        let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
+            alertAction?()
+        }
         self.present(alert, animated: true)
     }
 }
