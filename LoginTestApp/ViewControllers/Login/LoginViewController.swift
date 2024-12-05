@@ -12,8 +12,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    private let password: String = "123"
-    private let user: String = "123"
+    private let user = User.getUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,36 +21,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        loginTextField.text = ""
-        passwordTextField.text = ""
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        view.endEditing(true)
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        guard loginTextField.text == user, passwordTextField.text == password else {
-            viewAlertAction("Invalid login or password",
-                      "Please try again",
-                      { self.loginTextField.text = ""}
-            )
-            return false
-        }
-        return true
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? WelcomeViewController {
-            destinationVC.user = user
-        }
-    }
-    
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == loginTextField {
             passwordTextField.becomeFirstResponder()
         } else {
@@ -60,12 +30,50 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loginTextField.text = user.login
+        passwordTextField.text = user.password
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        guard loginTextField.text == user.login,
+              passwordTextField.text == user.password else {
+            viewAlertAction("Invalid login or password",
+                            "Please try again",
+                            { self.passwordTextField.text = ""}
+            )
+            return false
+        }
+        return true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let tabBarVC = segue.destination as? UITabBarController
+        
+        tabBarVC?.viewControllers?.forEach { viewController in
+            if let wecomeVC = viewController as? WelcomeViewController {
+                wecomeVC.user = user
+            }
+            else if let navigationVC = viewController as? UINavigationController {
+                let personeVC = navigationVC.topViewController as? PersonViewController
+                personeVC?.person = user.person
+            }
+        }
+    }
+    
     @IBAction private func forgotUserNameAction() {
-        viewAlertAction("Forgot username", user)
+        viewAlertAction("Forgot username", user.login)
     }
     
     @IBAction private func forgotPasswordAction() {
-        viewAlertAction("Forgot password", password)
+        viewAlertAction("Forgot password", user.password)
     }
     
     private func viewAlertAction(_ title: String, _ message: String,_ alertAction: (() -> Void)? = nil) {
@@ -76,6 +84,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         let okAction = UIAlertAction(title: "ОК", style: .default) { _ in
             alertAction?()
         }
+        alert.addAction(okAction)
         self.present(alert, animated: true)
     }
 }
