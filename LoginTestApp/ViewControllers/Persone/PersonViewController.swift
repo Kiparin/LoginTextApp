@@ -9,7 +9,7 @@ import UIKit
 
 final class PersonViewController: UIViewController {
     
-    @IBOutlet weak var userIconImageView: UIImageView!
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var surnameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
@@ -25,8 +25,9 @@ final class PersonViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         
-        userIconImageView.layer.cornerRadius = userIconImageView.frame.height / 2
-        userIconImageView.clipsToBounds = true
+        iconImageView.image = UIImage(named: person?.image ?? "")
+        iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
+        iconImageView.clipsToBounds = true
         
         surnameLabel.text = person?.surname ?? ""
         nameLabel.text = person?.name ?? ""

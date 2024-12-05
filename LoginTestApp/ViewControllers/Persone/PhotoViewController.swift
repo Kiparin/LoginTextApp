@@ -12,17 +12,17 @@ final class PhotoViewController: UIViewController {
     @IBOutlet weak var photoCollectionView: UICollectionView!
     
     private let photoDataSource: [UIImage] = [
-        UIImage(named : "photo1")!,
-        UIImage(named : "photo2")!,
-        UIImage(named : "photo3")!,
-        UIImage(named : "photo4")!,
-        UIImage(named : "photo5")!,
-        UIImage(named : "photo6")!,
-        UIImage(named : "photo7")!,
-        UIImage(named : "photo8")!,
-        UIImage(named : "photo9")!,
-        UIImage(named : "photo10")!,
-        UIImage(named : "photo11")!
+        UIImage(named : "photo1") ?? UIImage(),
+        UIImage(named : "photo2") ?? UIImage(),
+        UIImage(named : "photo3") ?? UIImage(),
+        UIImage(named : "photo4") ?? UIImage(),
+        UIImage(named : "photo5") ?? UIImage(),
+        UIImage(named : "photo6") ?? UIImage(),
+        UIImage(named : "photo7") ?? UIImage(),
+        UIImage(named : "photo8") ?? UIImage(),
+        UIImage(named : "photo9") ?? UIImage(),
+        UIImage(named : "photo10") ?? UIImage(),
+        UIImage(named : "photo11") ?? UIImage()
     ]
     
     override func viewDidLoad() {
@@ -31,7 +31,6 @@ final class PhotoViewController: UIViewController {
         photoCollectionView.dataSource = self
         photoCollectionView.delegate = self
         
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

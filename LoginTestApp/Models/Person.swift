@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Person{
-    
+struct Person {
+    let image: String
     let adge: Int
     let name: String
     let surname: String
@@ -16,5 +16,4 @@ struct Person{
     let phone: String
     let birthday: Date
     let bio: String
-    
 }

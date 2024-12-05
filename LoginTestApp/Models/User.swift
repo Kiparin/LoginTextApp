@@ -16,6 +16,7 @@ struct User {
             login: "User",
             password: "User",
             person: Person(
+                image: "userIcon",
                 adge: 34,
                 name: "Alexey",
                 surname: "Kiparin",

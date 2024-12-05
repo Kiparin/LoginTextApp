@@ -7,8 +7,9 @@
 
 import UIKit
 
-final class LoginViewController: UIViewController, UITextFieldDelegate {
+final class LoginViewController: UIViewController {
     
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -19,15 +20,6 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == loginTextField {
-            passwordTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-        return true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,11 +35,13 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        guard loginTextField.text == user.login,
-              passwordTextField.text == user.password else {
-            viewAlertAction("Invalid login or password",
-                            "Please try again",
-                            { self.passwordTextField.text = ""}
+        guard loginTextField.text == user.login, passwordTextField.text == user.password else {
+            viewAlertAction(
+                "Invalid login or password",
+                "Please try again",
+                {
+                    self.passwordTextField.text = ""
+                }
             )
             return false
         }
@@ -89,3 +83,16 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+extension LoginViewController : UITextFieldDelegate  {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == loginTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            if shouldPerformSegue(withIdentifier: "tabBarSegue", sender: self) {
+                performSegue(withIdentifier: "tabBarSegue", sender: self)
+            }
+        }
+        return true
+    }
+}

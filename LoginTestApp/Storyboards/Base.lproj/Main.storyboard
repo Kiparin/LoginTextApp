@@ -60,7 +60,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Log In"/>
                                         <connections>
-                                            <segue destination="3zc-Lk-JsR" kind="presentation" modalPresentationStyle="fullScreen" id="uAk-t9-rJr"/>
+                                            <segue destination="3zc-Lk-JsR" kind="presentation" identifier="tabBarSegue" modalPresentationStyle="fullScreen" id="uAk-t9-rJr"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -76,6 +76,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="a0g-YE-xn1" id="6X2-BJ-puS"/>
                         <outlet property="loginTextField" destination="uO0-m9-obU" id="Xl7-Ry-LFW"/>
                         <outlet property="passwordTextField" destination="Qva-Ra-5vD" id="Gjd-Be-RRg"/>
                     </connections>
@@ -241,7 +242,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HlC-rb-QPG">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HlC-rb-QPG">
                                 <rect key="frame" x="60" y="92" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="nr7-L4-Veq"/>
@@ -277,10 +278,10 @@
                         <outlet property="ageLabel" destination="Xl0-87-UaB" id="uaJ-DO-fyp"/>
                         <outlet property="birthdayLabel" destination="pHs-tC-AVG" id="NKe-Hs-obr"/>
                         <outlet property="emailLabel" destination="ILB-R6-Gaq" id="3gc-Va-5tO"/>
+                        <outlet property="iconImageView" destination="HlC-rb-QPG" id="edt-gB-wsK"/>
                         <outlet property="nameLabel" destination="rk4-S9-OBy" id="x1Z-pn-7Hh"/>
                         <outlet property="phoneLabel" destination="Oh4-TF-vKn" id="Ell-Wy-fmP"/>
                         <outlet property="surnameLabel" destination="fkc-Sa-nSJ" id="BKv-NW-Z8W"/>
-                        <outlet property="userIconImageView" destination="HlC-rb-QPG" id="GgS-V8-p7I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DVT-Y1-fBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -427,7 +428,6 @@
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.crop.rectangle" catalog="system" width="128" height="93"/>
         <image name="sunset" catalog="system" width="128" height="108"/>
-        <image name="userIcon" width="320" height="320"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

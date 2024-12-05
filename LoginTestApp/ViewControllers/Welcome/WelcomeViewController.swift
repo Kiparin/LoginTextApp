@@ -23,5 +23,4 @@ final class WelcomeViewController: UIViewController {
     @IBAction private func backToLoginViewAction() {
         dismiss(animated: true, completion: nil)
     }
-    
 }
